@@ -15,7 +15,6 @@ public interface IBuildingService {
     List<BuildingSearchResponse> getListBuilding(BuildingSearchRequestDTO buildingSearchRequestDTO, Pageable pageable);
     Long saveBuildingHasRentArea(BuildingEntity buildingEntity);
     void saveBuilding(BuildingEntity buildingEntity);
-    void update(BuildingEntity buildingEntity);
     BuildingDTO getBuildingById(Long id);
     void deleteBuilding(Long id);
     StaffResponseDTO listType(Long buildingId);

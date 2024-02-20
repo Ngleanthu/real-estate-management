@@ -174,7 +174,7 @@ public class UserService implements IUserService {
     public StaffResponseDTO listStaff(Long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get();
         List<UserEntity> staff = userRepository.findByStatusAndRoles_Code(1, "STAFF");
-        List<AssignmentBuildingEntity> staffAssignmentBuilding = building.getStaffs();
+        List<UserEntity> staffs = building.getStaffs();
         List<ResponseDTO> list = new ArrayList<>();
         StaffResponseDTO results = new StaffResponseDTO();
         for(UserEntity it : staff){
@@ -182,8 +182,8 @@ public class UserService implements IUserService {
             staffDTO.setFullName(it.getFullName());
             staffDTO.setId(it.getId());
             List<Long> listId = new ArrayList<>();
-            for(AssignmentBuildingEntity item : staffAssignmentBuilding){
-                listId.add(item.getStaff().getId());
+            for(UserEntity item : staffs){
+                listId.add(item.getId());
             }
             if(listId.contains(it.getId())){
                 staffDTO.setChecked("checked");

@@ -5,7 +5,6 @@ import com.javaweb.converter.BuildingConverter;
 import com.javaweb.dto.BuildingDTO;
 import com.javaweb.dto.request.BuildingSearchRequestDTO;
 import com.javaweb.dto.response.BuildingSearchResponse;
-import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.districtCode;
 import com.javaweb.enums.typeCode;
 import com.javaweb.service.IBuildingService;
@@ -14,13 +13,11 @@ import com.javaweb.utils.DisplayTagUtils;
 import com.javaweb.utils.MessageUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

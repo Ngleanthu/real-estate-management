@@ -1,7 +1,7 @@
 package com.javaweb.repository.custom;
 
 import com.javaweb.dto.request.BuildingSearchRequestDTO;
-import com.javaweb.entity.AssignmentBuildingEntity;
+//import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

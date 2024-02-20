@@ -6,13 +6,13 @@ import com.javaweb.dto.request.BuildingSearchRequestDTO;
 import com.javaweb.dto.response.BuildingSearchResponse;
 import com.javaweb.dto.response.ResponseDTO;
 import com.javaweb.dto.response.StaffResponseDTO;
-import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.enums.districtCode;
 import com.javaweb.enums.typeCode;
-import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.utils.UploadFileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -33,7 +33,7 @@ public class BuildingService implements IBuildingService {
     @Autowired
     private BuildingConverter buildingConverter;
     @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
+    private UserRepository userRepository;
     @Autowired
     private RentAreaService rentAreaService;
     @Autowired
@@ -95,10 +95,6 @@ public class BuildingService implements IBuildingService {
     public void saveBuilding(BuildingEntity buildingEntity) {
         buildingRepository.save(buildingEntity);
     }
-    @Override
-    public void update(BuildingEntity buildingEntity) {
-        buildingRepository.save(buildingEntity);
-    }
 
     @Override
     public BuildingDTO getBuildingById(Long id) {
@@ -112,17 +108,20 @@ public class BuildingService implements IBuildingService {
         }
         return buildingDTO;
     }
+
     @Override
     public void deleteBuilding(Long id) {
-            BuildingEntity building = buildingRepository.findById(id).get();
-            List<AssignmentBuildingEntity> assignmentBuildingEntities = building.getStaffs();
-            for(AssignmentBuildingEntity item : assignmentBuildingEntities){
-                assignmentBuildingRepository.delete(item);
-            }
-            rentAreaService.deleteRentArea(id);
-            buildingRepository.deleteById(id);
+        BuildingEntity building = buildingRepository.findById(id).get();
+        rentAreaService.deleteRentArea(id);
+        List<UserEntity> staffs = building.getStaffs();
+        building.getStaffs().clear();
+        buildingRepository.save(building);
+        for(UserEntity item: staffs){
+            item.getBuildings().remove(building);
+            userRepository.save(item);
+        }
+        buildingRepository.delete(building);
     }
-
 
     @Override
     public StaffResponseDTO listType(Long buildingId) {

@@ -41,8 +41,7 @@ public class BuildingEntity {
     private String brokerageFee;
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<RentAreaEntity> areas = new ArrayList<>();
-    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> staffs = new ArrayList<>();
+
 
     @Column(name = "avatar")
     private String image;
@@ -69,10 +68,19 @@ public class BuildingEntity {
     public void setAreas(List<RentAreaEntity> areas) {
         this.areas = areas;
     }
-    public List<AssignmentBuildingEntity> getStaffs() {
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name="assignmentbuilding",
+            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+    private List<UserEntity> staffs = new ArrayList<>();
+
+    public List<UserEntity> getStaffs() {
         return staffs;
     }
-    public void setStaffs(List<AssignmentBuildingEntity> staffs) {
+
+    public void setStaffs(List<UserEntity> staffs) {
         this.staffs = staffs;
     }
 

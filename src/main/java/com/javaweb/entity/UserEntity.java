@@ -80,15 +80,14 @@ public class UserEntity extends BaseEntity {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "staff" , fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> buildings = new ArrayList<>();
 
-    public List<AssignmentBuildingEntity> getBuildings() {
+    @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
+    private List<BuildingEntity> buildings = new ArrayList<>();
+    public List<BuildingEntity> getBuildings() {
         return buildings;
     }
-    public void setBuildings(List<AssignmentBuildingEntity> buildings) {
+    public void setBuildings(List<BuildingEntity> buildings) {
         this.buildings = buildings;
     }
-
 }
 
